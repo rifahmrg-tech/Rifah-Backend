@@ -10,7 +10,7 @@ connectDB();
 // Enable CORS and JSON parsing
 app.use(cors(
     {   //origin:'http://localhost:5173',
-       origin: "https://omt-front.vercel.app",
+       origin: "https://frontend-alpha-ten-60.vercel.app/",
     }
 ));
 app.use(express.json());
