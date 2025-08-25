@@ -1,35 +1,101 @@
+// const mongoose = require("mongoose");
+// const bcrypt = require("bcryptjs");
+// require("dotenv").config();
+// const STRING2 ="mongodb+srv://mohamedyoosuf2001:BvWSEKLCm14nihZ4@clusterrifah.o2i6ml8.mongodb.net/RifahMembers";
+// const User = require("./model/login"); // adjust path if needed
+
+// const seedAdmin = async () => {
+//   try {
+//     await mongoose.connect(STRING2);
+
+//     const existing = await User.findOne({ username: "yoosuf" });
+//     if (existing) {
+//       console.log("Admin already exists");
+//       process.exit(0);
+//     }
+
+//     const hashedPassword = await bcrypt.hash("yoosufpwd", 10);
+
+//     const admin = new User({
+//       username: "yoosuf",
+//       password: hashedPassword,
+//       role: "Admin",
+//     });
+
+//     await admin.save();
+//     console.log("✅ Member user created: username: member, password: member@omt45");
+//     process.exit(0);
+//   } catch (err) {
+
+//     console.error(err);
+//     process.exit(1);
+//   }
+// };
+
+// seedAdmin();
+
+
+
+
+
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
-const STRING2 ="mongodb+srv://mohamedyoosuf2001:BvWSEKLCm14nihZ4@clusterrifah.o2i6ml8.mongodb.net/RifahMembers";
-const User = require("./model/login"); // adjust path if needed
+const STRING2 = "mongodb+srv://mohamedyoosuf2001:BvWSEKLCm14nihZ4@clusterrifah.o2i6ml8.mongodb.net/RifahMembers";
+const User = require("./model/login"); // Adjust path if needed
 
-const seedAdmin = async () => {
+const seedUsers = async () => {
   try {
     await mongoose.connect(STRING2);
+    console.log("Connected to MongoDB");
 
-    const existing = await User.findOne({ username: "yoosuf" });
-    if (existing) {
+    // Create admin user (your existing logic)
+    const existingAdmin = await User.findOne({ username: "yoosuf" });
+    if (existingAdmin) {
       console.log("Admin already exists");
-      process.exit(0);
+    } else {
+      const hashedPassword = await bcrypt.hash("yoosufpwd", 10);
+      const admin = new User({
+        username: "yoosuf",
+        password: hashedPassword,
+        role: "Admin",
+      });
+      await admin.save();
+      console.log("✅ Admin user created: username: yoosuf, password: yoosufpwd");
     }
 
-    const hashedPassword = await bcrypt.hash("yoosufpwd", 10);
+    // Create 10 additional users
+    const users = Array.from({ length: 10 }, (_, index) => ({
+      username: `user${index + 1}`, // e.g., user1, user2, ..., user10
+      password: `user${index + 1}pwd`, // e.g., user1pwd, user2pwd, ..., user10pwd
+      role: "Member", // Default role for new users
+    }));
 
-    const admin = new User({
-      username: "yoosuf",
-      password: hashedPassword,
-      role: "Admin",
-    });
+    for (const user of users) {
+      const existingUser = await User.findOne({ username: user.username });
+      if (existingUser) {
+        console.log(`Username ${user.username} already exists, skipping...`);
+        continue;
+      }
 
-    await admin.save();
-    console.log("✅ Member user created: username: member, password: member@omt45");
+      const hashedPassword = await bcrypt.hash(user.password, 10);
+      const newUser = new User({
+        username: user.username,
+        password: hashedPassword,
+        role: user.role,
+      });
+      await newUser.save();
+      console.log(`✅ User created: username: ${user.username}, password: ${user.password}`);
+    }
+
+    console.log("All users added successfully!");
     process.exit(0);
   } catch (err) {
-
-    console.error(err);
+    console.error("Error seeding users:", err);
     process.exit(1);
+  } finally {
+    mongoose.connection.close();
   }
 };
 
-seedAdmin();
+seedUsers();

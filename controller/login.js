@@ -16,7 +16,7 @@ const register = async(req,res)=>{
   try{
     let user = await User.findOne({username});
     if(user){
-      return res.status(400).json({error:"Username is already exist"})
+      return res.status(400).json({error:"Username already exists"})
     }
     const hashPwd = await bcrypt.hash(password, 10)
     const newUser = await User.create({memberId,username,password:hashPwd,role});
