@@ -24,7 +24,7 @@ exports.createServiceRequest = async (req, res) => {
 // Get all service requests
 exports.getServiceRequests = async (req, res) => {
   try {
-    const requests = await ServiceRequest.find();
+    const requests = await ServiceRequest.find().populate("postedBy" ,"name");
     res.status(200).json(requests);
   } catch (error) {
     console.error('Error fetching service requests:', error);

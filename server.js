@@ -12,7 +12,7 @@ connectDB();
 // Enable CORS and JSON parsing
 app.use(cors(
     {   //origin:'http://localhost:5173',
-       origin: "https://rifah-frontend.vercel.app",
+          origin: "https://rifah-frontend.vercel.app",
        credentials:true
     }
 ));

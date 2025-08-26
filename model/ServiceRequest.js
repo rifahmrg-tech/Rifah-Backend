@@ -22,8 +22,9 @@ const serviceRequestSchema = new mongoose.Schema({
     default: Date.now,
   },
   postedBy: {
-    type: String,
-    required: true,
+   type:mongoose.Schema.Types.ObjectId,
+           ref:"Member",
+           required:true
   },
 });
 
