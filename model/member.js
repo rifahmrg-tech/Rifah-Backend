@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const addMember = new mongoose.Schema({
+const memberSchema2 = new mongoose.Schema({
   Timestamp: String,
   FormId: String,
   BusinessName: String,
@@ -58,4 +58,4 @@ const addMember = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Member', addMember);  
+module.exports = mongoose.model('Member2', memberSchema2);  
