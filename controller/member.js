@@ -163,4 +163,27 @@ const addMember = async (req, res) => {
 
 
 
-module.exports = {addMember}
+// Fetch all members
+const getMembers = async (req, res) => {
+  try {
+    const members = await Member2.find().sort({ timestamp: -1 }); // newest first
+    res.json(members);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Fetch single member by ID
+const getMemberById = async (req, res) => {
+  try {
+    const member = await Member2.findById(req.params.id);
+    if (!member) {
+      return res.status(404).json({ message: "Member not found" });
+    }
+    res.json(member);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+module.exports = { addMember, getMembers, getMemberById };
