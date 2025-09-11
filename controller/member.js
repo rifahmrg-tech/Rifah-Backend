@@ -1,4 +1,4 @@
-const Member = require("../model/RifahMembers");
+const Member = require("../model/member");
 
 // ✅ Add Member (sync with Google Sheet)
 const addMember = async (req, res) => {
@@ -72,7 +72,7 @@ const addMember = async (req, res) => {
     // }
 
       // ➕ Insert new member 
-      const form = await Form.create({
+      const member = await Member.create({
             Timestamp,
             FormId,
             BusinessName,
