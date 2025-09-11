@@ -1,4 +1,4 @@
-const Member = require("../model/member");
+const Member2 = require("../model/member");
 
 // ✅ Add Member (sync with Google Sheet)
 const addMember = async (req, res) => {
@@ -84,7 +84,7 @@ const addMember = async (req, res) => {
     // }
 
       // ➕ Insert new member 
-      const member = await Member.create({
+      const member = await Member2.create({
             timestamp,
           formId,
           businessName,
