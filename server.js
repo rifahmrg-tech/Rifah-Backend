@@ -11,8 +11,8 @@ connectDB();
 
 // Enable CORS and JSON parsing
 app.use(cors(
-    {   //origin:'http://localhost:5173',
-          origin: "https://rifah-frontend.vercel.app",
+    {   origin:'http://localhost:5173',
+         //origin: "https://rifah-frontend.vercel.app",
        credentials:true
     }
 ));
@@ -21,6 +21,7 @@ app.use(express.json());
 app.use('/api/members',require("./routes/RifahMembers"));
 app.use("/auth", require("./routes/login"));    //fl
 app.use('/api',require('./routes/serviceRequestRoutes'));
+app.use('/member',require('./routes/member'));
 
 
 
