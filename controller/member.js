@@ -1,4 +1,5 @@
 const Member2 = require("../model/member");
+const bcrypt = require("bcryptjs");
 
 // ✅ Add Member (sync with Google Sheet)
 const addMember = async (req, res) => {
@@ -77,6 +78,12 @@ const addMember = async (req, res) => {
           
         } = req.body;
 
+           // ✅ Hash the password (only if provided)
+    let hashedPassword = null;
+    if (passwordForLogin) {
+      hashedPassword = await bcrypt.hash(passwordForLogin, 10);
+    }
+
 
 
     // if (!emailAddress) {
@@ -148,9 +155,11 @@ const addMember = async (req, res) => {
           relPhoto,
           pdf,
           whatDoYouExpectFromRifah,
-          passwordForLogin
+         passwordForLogin: hashedPassword
 });
-
+ // ✅ Don’t expose the hashed password in the API response
+    const memberWithoutPassword = member.toObject();
+    delete memberWithoutPassword.passwordForLogin;
    
     res.json({ message: "✅ Member synced successfully", member });
     console.log("data got from appscript")
