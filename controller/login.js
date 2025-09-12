@@ -64,7 +64,7 @@ const login = async (req, res) => {
       sameSite: 'None',
       secure: true,
       maxAge: 2 * 60 * 60 * 1000,
-    }).json({ message: "Login successful",success: true,user: { id:user._id }} );
+    }).json({ message: "Login successful",success: true,user: { id:user._id,name:user.businessName }} );
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -86,6 +86,6 @@ const logOut= (req, res) => {
 
 //check
 const check= async (req, res) => {
-  res.json({ userId: req.user.userId });
+  res.json({ userId: req.user.userId, });
 }
 module.exports ={login,logOut,check,register,getAllUser}
