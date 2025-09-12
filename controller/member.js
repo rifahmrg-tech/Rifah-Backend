@@ -73,8 +73,8 @@ const addMember = async (req, res) => {
           relPhoto,
           pdf,
           whatDoYouExpectFromRifah,
-          passwordForLogin,
-          salt
+          passwordForLogin
+          
         } = req.body;
 
 
@@ -148,8 +148,7 @@ const addMember = async (req, res) => {
           relPhoto,
           pdf,
           whatDoYouExpectFromRifah,
-          passwordForLogin,
-          salt
+          passwordForLogin
 });
 
    

@@ -64,8 +64,7 @@ const memberSchema2 = new mongoose.Schema({
   relPhoto: String,
   pdf: String,
   whatDoYouExpectFromRifah: String,
-  passwordForLogin: String,
-  salt: String
+  passwordForLogin: String
 });
 
 module.exports = mongoose.model('Member2', memberSchema2);

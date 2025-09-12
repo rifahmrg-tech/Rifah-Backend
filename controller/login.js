@@ -1,6 +1,6 @@
 //controller/login.js
 
-const User = require("../model/login");
+const User = require("../model/member");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 // const Activity = require("../model/activity");
@@ -45,16 +45,17 @@ const register = async(req,res)=>{
 //login
 const login = async (req, res) => {
   const { username, password } = req.body;
+  const  businessEmailAddress=username;
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ businessEmailAddress});
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.passwordForLogin);
     if (!isMatch )
       return res.status(400).json({ message: "Invalid credentials or role" });
 
-    const token = jwt.sign({ userId: user._id, role: user.role, memberId: user.memberId }, process.env.SECRET_KEY, {
+    const token = jwt.sign({ userId: user._id}, process.env.SECRET_KEY, {
       expiresIn: "2h",
     });
 
@@ -63,14 +64,14 @@ const login = async (req, res) => {
       sameSite: 'None',
       secure: true,
       maxAge: 2 * 60 * 60 * 1000,
-    }).json({ message: "Login successful",success: true,user: { role: user.role, username: user.username,memberId:user.memberId }} );
+    }).json({ message: "Login successful",success: true,user: { id:user._id }} );
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
 
 const getAllUser = async(req,res)=>{
-    const users = await User.find().populate("memberId","name photoUrl")
+    const users = await User.find()
     return res.json(users);
 }
 
@@ -85,6 +86,6 @@ const logOut= (req, res) => {
 
 //check
 const check= async (req, res) => {
-  res.json({ userId: req.user.userId, role: req.user.role,memberId: req.user.memberId });
+  res.json({ userId: req.user.userId });
 }
 module.exports ={login,logOut,check,register,getAllUser}
