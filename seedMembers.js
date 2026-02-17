@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 // Replace with your MongoDB URI or use .env
-const MONGO_URI = "mongodb+srv://mohamedyoosuf2001:BvWSEKLCm14nihZ4@clusterrifah.o2i6ml8.mongodb.net/RifahMembers";
+const MONGO_URI = "mongodb://rifahmrg_db_user:rifah2026@cluster0-shard-00-00.qg8svfy.mongodb.net:27017,cluster0-shard-00-01.qg8svfy.mongodb.net:27017,cluster0-shard-00-02.qg8svfy.mongodb.net:27017/RifahMembers?ssl=true&replicaSet=atlas-cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 // Import your models
 const Member = require("./model/RifahMembers"); // Adjust path

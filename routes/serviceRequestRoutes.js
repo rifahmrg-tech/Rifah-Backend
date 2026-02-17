@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const serviceRequestController = require('../controller/serviceRequestController');
 
-router.post('/service-requests', serviceRequestController.createServiceRequest);
-router.get('/service-requests', serviceRequestController.getServiceRequests);
+// ✅ FIXED: Changed paths to '/' because the base path is already set in server.js
+router.post('/', serviceRequestController.createServiceRequest);
+router.get('/', serviceRequestController.getServiceRequests);
 
 module.exports = router;
